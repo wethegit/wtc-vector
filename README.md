@@ -1,2 +1,2 @@
 # wtc-vector
-A basic 3d vector class
+A basic 2d vector class

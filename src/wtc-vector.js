@@ -127,7 +127,7 @@ class Vector {
   }
 
   set x(x) {
-    if(typoef x == 'number') {
+    if(typeof x == 'number') {
       this._x = x;
     } else {
       throw new TypeError('X should be a number');
@@ -138,7 +138,7 @@ class Vector {
   }
 
   set y(y) {
-    if(typoef y == 'number') {
+    if(typeof y == 'number') {
       this._y = y;
     } else {
       throw new TypeError('Y should be a number');
@@ -150,7 +150,7 @@ class Vector {
 
   set length(length) {
     var factor;
-    if(typoef length == 'number') {
+    if(typeof length == 'number') {
       factor = length / this.length;
       this.multiplyScalar(factor);
     } else {
@@ -162,7 +162,7 @@ class Vector {
   }
 
   set angle(radian) {
-    if(typoef radian == 'number') {
+    if(typeof radian == 'number') {
       this.rotate(radian);
     } else {
       throw new TypeError('angle should be a number');
