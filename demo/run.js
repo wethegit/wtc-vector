@@ -12,9 +12,13 @@ ready(function() {
 
   let canvas = document.getElementById('canvas');
   let ctx = canvas.getContext("2d");
+  let canvas2 = document.getElementById('canvas2');
+  let ctx2 = canvas2.getContext("2d");
 
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
+  canvas2.width = window.innerWidth;
+  canvas2.height = window.innerHeight;
 
   let offset = new Vector(window.innerWidth / 2, window.innerHeight / 2);
 
@@ -28,13 +32,26 @@ ready(function() {
   window.addEventListener('resize', function(e) {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    canvas2.width = window.innerWidth;
+    canvas2.height = window.innerHeight;
 
     offset.reset(window.innerWidth / 2, window.innerHeight / 2);
   });
 
   document.body.addEventListener('click', function(e) {
-    vectors.push(new Vector(e.clientX - offset.x, e.clientY - offset.y));
+    vectors.push({
+      v: new Vector(e.clientX - offset.x, e.clientY - offset.y),
+      moving: moving
+    });
   });
+
+  window.addVector = function(x, y, moving = false) {
+
+    vectors.push({
+      v: new Vector(x, y),
+      moving: moving
+    });
+  }
 
   let drawScale = function() {
     ctx.beginPath();
@@ -80,7 +97,7 @@ ready(function() {
     ctx.stroke();
   }
 
-  let drawVector = function(v, i, offsetX = offset.x, offsetY = offset.y) {
+  let drawVector = function(v, i, drawTrace = false, offsetX = offset.x, offsetY = offset.y) {
     var x = offsetX;
     var y = offsetY;
 
@@ -106,14 +123,27 @@ ready(function() {
 
     ctx.stroke();
 
-    if((i+1) % 2 === 0) {
-      console.log('s')
-      // Draw a third, relatable vecor
-      var v1 = vectors[i-1];
-      var v2 = v;
-      var v3 = v1.subtractNew(v2);
+    if(drawTrace) {
+      ctx2.beginPath();
+      ctx2.arc(x, y, 2, 0, 2 * Math.PI, false);
+      ctx2.fillStyle = colours[i % colours.length];
+      ctx2.fill();
+    }
 
-      drawVector(v3, i+1, x, y);
+    if((i+1) % 2 === 0) {
+      // Vector subtraction - finding the difference between two vectors
+      // var v1 = vectors[i-1].v;
+      // var v2 = v;
+      // var v3 = v1.subtractNew(v2);
+      //
+      // drawVector(v3, i+1, x, y);
+
+      // Vector addition - adding A to B
+      var v1 = vectors[i-1].v;
+      var v2 = v;
+      var v3 = v1.addNew(v2);
+
+      drawVector(v3, i+1);
     }
   }
 
@@ -128,8 +158,11 @@ ready(function() {
     drawScale();
 
     for(var i =0; i < vectors.length; i++) {
-      vectors[i].rotate(0.01);
-      drawVector(vectors[i], i);
+      let v = vectors[i];
+      if(v.moving) {
+        v.v.rotate(0.005);
+      }
+      drawVector(v.v, i);
     }
 
     requestAnimationFrame(draw);
