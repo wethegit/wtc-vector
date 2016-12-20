@@ -47,10 +47,14 @@ ready(function() {
 
   window.addVector = function(x, y, moving = false) {
 
-    vectors.push({
+    var vectorObj = {
       v: new Vector(x, y),
       moving: moving
-    });
+    }
+
+    vectors.push(vectorObj);
+
+    return vectorObj;
   }
 
   let drawScale = function() {
