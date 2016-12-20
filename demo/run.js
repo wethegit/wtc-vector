@@ -109,13 +109,8 @@ ready(function() {
     y = v.y + offsetY;
     ctx.lineTo(x, y);
 
-    // console.log(v.angle);
-
     var av1 = arrowV1.rotateNew(v.angle);
     var av2 = arrowV2.rotateNew(v.angle);
-
-    // var v1 = arrowV1.clone();
-    // var v2 = arrowV2.clone();
 
     ctx.lineTo(av1.x + x, av1.y + y);
     ctx.moveTo(x, y);
@@ -159,10 +154,12 @@ ready(function() {
 
     for(var i =0; i < vectors.length; i++) {
       let v = vectors[i];
+      let drawTrace = false;
       if(v.moving) {
         v.v.rotate(0.005);
+        drawTrace = true;
       }
-      drawVector(v.v, i);
+      drawVector(v.v, i, drawTrace);
     }
 
     requestAnimationFrame(draw);
@@ -171,6 +168,6 @@ ready(function() {
   draw();
 
   // Add 2 vectors and have the second one move
-  addVector(-100, -100);
-  addVector(100, 200, true);
+  addVector(-200, -200);
+  addVector(100, 100, true);
 });
