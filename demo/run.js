@@ -125,7 +125,7 @@ ready(function() {
 
     if(drawTrace) {
       ctx2.beginPath();
-      ctx2.arc(x, y, 2, 0, 2 * Math.PI, false);
+      ctx2.arc(x, y, 1, 0, 2 * Math.PI, false);
       ctx2.fillStyle = colours[i % colours.length];
       ctx2.fill();
     }
@@ -143,7 +143,7 @@ ready(function() {
       var v2 = v;
       var v3 = v1.addNew(v2);
 
-      drawVector(v3, i+1);
+      drawVector(v3, i+1, true);
     }
   }
 
@@ -168,5 +168,9 @@ ready(function() {
     requestAnimationFrame(draw);
   }
 
-  draw()
+  draw();
+
+  // Add 2 vectors and have the second one move
+  addVector(-100, -100);
+  addVector(100, 200, true);
 });
