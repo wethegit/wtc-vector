@@ -16,6 +16,11 @@ class Vector {
     this.y = y;
   }
 
+	reset(x, y) {
+    this.x = x;
+    this.y = y;
+	}
+
   clone() {
     return new Vector(this.x, this.y);
   }
@@ -110,8 +115,12 @@ class Vector {
   }
 
   rotate(radian) {
-  	this.x = (this.x * Math.cos(radian)) - (this.y * Math.sin(radian));
-  	this.y = (this.x * Math.sin(radian)) + (this.y * Math.cos(radian));
+  	var x = (this.x * Math.cos(radian)) - (this.y * Math.sin(radian));
+  	var y = (this.x * Math.sin(radian)) + (this.y * Math.cos(radian));
+
+		this.x = x;
+		this.y = y;
+
   	return this;
   }
   rotateNew(radian) {
@@ -125,6 +134,23 @@ class Vector {
   rotateDegNew(degrees) {
     return this.rotateNew(degreesToRadian(degrees));
   }
+
+  rotateBy(radian) {
+		var angle = this.angle + radian;
+		return this.rotate(angle);
+  }
+  rotateByNew(radian) {
+    let v = this.clone();
+    return v.rotateBy(radian);
+  }
+
+	rotateTo(radian) {
+		return this.rotate(radian-this.angle);
+	};
+	rotateToNew(radian) {
+    let v = this.clone();
+    return v.rotateTo(radian);
+	};
 
   set x(x) {
     if(typeof x == 'number') {
@@ -169,7 +195,9 @@ class Vector {
     }
   }
   get angle() {
-    return Math.atan2(this.x, this.y)
+    return Math.atan2(this.y, this.x);
   }
 
 }
+
+export default Vector;
