@@ -268,13 +268,13 @@ class Vector {
   }
 
   /**
-   * @alias multiplyScalar
+   * Alias of {@link Vector#multiplyScalar__anchor multiplyScalar}
    */
   scale(scalar) {
     return this.multiplyScalar(scalar);
   }
   /**
-   * @alias multiplyScalarNew
+   * Alias of {@link Vector#multiplyScalarNew__anchor multiplyScalarNew}
    */
   scaleNew(scalar) {
     return this.multiplyScalarNew(scalar);
@@ -335,26 +335,26 @@ class Vector {
   }
 
   /**
-   * @alias rotate
+   * Alias of {@link Vector#rotate__anchor rotate}
    */
   rotateBy(radian) {
 		return this.rotate(radian);
   }
   /**
-   * @alias rotateNew
+   * Alias of {@link Vector#rotateNew__anchor rotateNew}
    */
   rotateByNew(radian) {
     return this.rotateNew(radian);
   }
 
   /**
-   * @alias rotateDeg
+   * Alias of {@link Vector#rotateDeg__anchor rotateDeg}
    */
   rotateDegBy(degrees) {
 		return this.rotateDeg(degrees);
   }
   /**
-   * @alias rotateDegNew
+   * Alias of {@link Vector#rotateDegNew__anchor rotateDegNew}
    */
   rotateDegByNew(radian) {
     return tjos.rotateDegNew(radian);
