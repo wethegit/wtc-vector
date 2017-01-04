@@ -1,4 +1,4 @@
-import Vector from "../src/wtc-vector";
+import Vector from "../../src/wtc-vector";
 
 function ready(fn) {
   if (document.readyState != 'loading'){
@@ -24,7 +24,7 @@ ready(function() {
 
   var vectors = [];
 
-  var colours = ['#c678dd', '#98c379', '#c34448', '#4e9c9e', '#d18549', 'abb2bf']
+  var colours = ['#c678dd', '#98c379', '#c34448', '#4e9c9e', '#d18549', '#abb2bf']
 
   var arrowV1 = new Vector(-10, -10);
   var arrowV2 = new Vector(-10, 10);
@@ -36,13 +36,6 @@ ready(function() {
     canvas2.height = window.innerHeight;
 
     offset.reset(window.innerWidth / 2, window.innerHeight / 2);
-  });
-
-  document.body.addEventListener('click', function(e) {
-    vectors.push({
-      v: new Vector(e.clientX - offset.x, e.clientY - offset.y),
-      moving: moving
-    });
   });
 
   window.addVector = function(x, y, moving = false) {
@@ -121,29 +114,6 @@ ready(function() {
     ctx.lineTo(av2.x + x, av2.y + y);
 
     ctx.stroke();
-
-    if(drawTrace) {
-      ctx2.beginPath();
-      ctx2.arc(x, y, 1, 0, 2 * Math.PI, false);
-      ctx2.fillStyle = colours[i % colours.length];
-      ctx2.fill();
-    }
-
-    if((i+1) % 2 === 0) {
-      // Vector subtraction - finding the difference between two vectors
-      // var v1 = vectors[i-1].v;
-      // var v2 = v;
-      // var v3 = v1.subtractNew(v2);
-      //
-      // drawVector(v3, i+1, x, y);
-
-      // Vector addition - adding A to B
-      var v1 = vectors[i-1].v;
-      var v2 = v;
-      var v3 = v1.addNew(v2);
-
-      drawVector(v3, i+1, true);
-    }
   }
 
   let draw = function() {
@@ -155,29 +125,69 @@ ready(function() {
     ctx.fill();
 
     drawScale();
+    drawSnowflakes();
 
     for(var i =0; i < vectors.length; i++) {
       let v = vectors[i];
       let drawTrace = false;
-      if(v.moving) {
-        v.v.rotate(0.005);
-        drawTrace = true;
-      }
       drawVector(v.v, i, drawTrace);
-    }
-
-    if(vectors.length >= 2)
-    {
-      console.clear();
-      console.log(vectors[0].v.normaliseNew().length, vectors[0].v.normaliseNew().dotProduct(vectors[1].v.normaliseNew()));
     }
 
     requestAnimationFrame(draw);
   }
 
-  draw();
+  // These are the vectors that affect the snowflake's movement
+  let factor = 200;
+  let gravity = addVector(0, 100);
+  let float = addVector(50, 50);
 
-  // Add 2 vectors and have the second one move
-  addVector(-200, -200);
-  addVector(100, 100, true);
+  let snowflakes = [];
+
+  console.log(gravity.v, gravity.v.divideScalarNew(factor))
+
+  let addSnowklake = function(x, y) {
+    let snowflake = {
+      radius: 2 + Math.random() * 10,
+      opacity: 20 + Math.random() * 60,
+      pos: new Vector(x, y)
+    }
+
+    console.log(snowflake);
+
+    snowflakes.push(snowflake);
+  }
+
+  let drawSnowflakes = function() {
+    float.v.rotate(0.005);
+
+    snowflakes.forEach(function(flake, index) {
+      // Apply our forces
+      let forces = new Vector(0,0);
+      forces.add(gravity.v.divideScalarNew(factor));
+      forces.add(float.v.divideScalarNew(factor).multiply(new Vector(1, 0)));
+      // Add our forces to the position
+      flake.pos.add(forces);
+
+      // draw the flake
+      ctx.beginPath();
+      ctx.fillStyle = "#FFFFFF" + Math.round(flake.opacity / 100 * 255).toString(16);
+      ctx.arc(flake.pos.x, flake.pos.y, flake.radius, 0, 2 * Math.PI, false);
+      ctx.fill();
+
+      if(flake.pos.y > window.innerHeight) {
+        snowflakes.splice(index, 1);
+      }
+    });
+  }
+
+
+  document.body.addEventListener('click', function(e) {
+    addSnowklake(e.clientX, e.clientY);
+  });
+
+
+
+
+
+  draw();
 });

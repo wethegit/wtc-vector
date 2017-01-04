@@ -1,4 +1,3 @@
-
 const conversionFactor = 180 / Math.PI;
 
 var radianToDegrees = function(radian) {
@@ -408,6 +407,33 @@ class Vector {
     return this.rotateToNew(degreesToRadian(degrees));
   }
 
+	normalise() {
+		return this.divideScalar(this.length);
+	}
+	normaliseNew() {
+		return this.divideScalarNew(this.length);
+	}
+
+	distance(vector) {
+		return this.subtractNew(vector).length;
+	}
+
+	distanceX(vector) {
+		return this.x - vector.x;
+	}
+
+	distanceY(vector) {
+		return this.y - vector.y;
+	}
+
+	dotProduct(vector) {
+		return (this.x * vector.x) + (this.y * vector.y);
+	}
+
+	crossProduct(vector) {
+		return (this.x * vector.x) - (this.y * vector.y);
+	}
+
 
   /**
    * Getters and setters
@@ -448,6 +474,26 @@ class Vector {
   }
 
 	/**
+	* (getter/setter) The length of the vector presented as a square. If you're using
+	* length for comparison, this is quicker.
+	*
+	* @type {number}
+	* @default 0
+	*/
+  set lengthSquared(length) {
+    var factor;
+    if(typeof length == 'number') {
+      factor = length / this.lengthSquared;
+      this.multiplyScalar(factor);
+    } else {
+      throw new TypeError('length should be a number');
+    }
+  }
+  get lengthSquared() {
+    return (this.x * this.x) + (this.y * this.y);
+  }
+
+	/**
 	* (getter/setter) The length of the vector
 	*
 	* @type {number}
@@ -463,7 +509,7 @@ class Vector {
     }
   }
   get length() {
-    return Math.sqrt((this.x * this.x) + (this.y * this.y));
+    return Math.sqrt(this.lengthSquared);
   }
 
 	/**

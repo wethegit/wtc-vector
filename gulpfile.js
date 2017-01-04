@@ -21,10 +21,13 @@ var gulp          = require('gulp'),
     jsdoc         = require("gulp-jsdoc3");
 
 var files     = {
-    es6       : {
+    es6       : [{
       entries: './demo/run.js',
       output: './demo'
-    },
+    }, {
+      entries: './demo/snowflake/run.js',
+      output: './demo/snowflake'
+    }],
     jsdoc     : {
       src: './src/*.js',
       opt: './doc'
@@ -32,18 +35,21 @@ var files     = {
 }
 
 gulp.task('build', function() {
-  var b = browserify({
-    entries: files.es6.entries,
-    debug: true
+
+  files.es6.forEach(function(entry) {
+    var b = browserify({
+      entries: entry.entries,
+      debug: true
+    });
+
+    b.transform("babelify", {presets: ["es2015"]});
+    return b.bundle()
+      .pipe(source('pub.js'))
+      .pipe(buffer())
+      .pipe(gulp.dest(entry.output))
+      .pipe(notify('✓ <%= file.relative %> ready.'));
   });
 
-  b.transform("babelify", {presets: ["es2015"]});
-
-  return b.bundle()
-    .pipe(source('index.js'))
-    .pipe(buffer())
-    .pipe(gulp.dest(files.es6.output))
-    .pipe(notify('✓ <%= file.relative %> ready.'));
 });
 
 gulp.task('document', function(cb) {
