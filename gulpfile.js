@@ -18,12 +18,16 @@ var gulp          = require('gulp'),
     buffer        = require('vinyl-buffer'),
     notify        = require('gulp-notify'),
     source        = require('vinyl-source-stream'),
-    jsdoc         = require("gulp-jsdoc3");
+    jsdoc         = require("gulp-jsdoc3"),
+    webserver     = require('gulp-webserver');
 
 var files     = {
     es6       : [{
       entries: './demo/run.js',
       output: './demo'
+    }, {
+      entries: './demo/addition/run.js',
+      output: './demo/addition'
     }, {
       entries: './demo/snowflake/run.js',
       output: './demo/snowflake'
@@ -31,7 +35,12 @@ var files     = {
     jsdoc     : {
       src: './src/*.js',
       opt: './doc'
-    }
+    },
+    watch     : [
+      'src/wtc-vector.js',
+      'demo/app/VectorPlayground.js',
+      'demo/app/DrawingVector.js'
+    ]
 }
 
 gulp.task('build', function() {
@@ -50,6 +59,48 @@ gulp.task('build', function() {
       .pipe(notify('✓ <%= file.relative %> ready.'));
   });
 
+});
+
+
+/*
+  Watch
+*/
+gulp.task('watch', () => {
+
+  files.es6.forEach(function(entry) {
+
+    let entries = [entry.entries].concat(files.watch);
+    gulp.watch(entries, function() {
+
+      var b = browserify({
+        entries: entry.entries,
+        debug: true
+      });
+
+
+      b.transform("babelify", {presets: ["es2015"]});
+      return b.bundle()
+        .on('error', function(e) {
+          // If you want details of the error in the console
+          console.log(e.toString())
+
+          this.emit('end')
+        })
+        .pipe(source('pub.js'))
+        .pipe(buffer())
+        .pipe(gulp.dest(entry.output))
+        .pipe(notify('✓ <%= file.relative %> ready.'));
+    })
+  });
+
+  gulp.src('demo')
+    .pipe(webserver({
+      fallback: 'index.html',
+      host: '0.0.0.0',
+      port: 1337,
+      livereload: true,
+      open: 'http://0.0.0.0:1337/'
+    }));
 });
 
 gulp.task('document', function(cb) {
