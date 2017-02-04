@@ -407,30 +407,88 @@ class Vector {
     return this.rotateToNew(degreesToRadian(degrees));
   }
 
+	/**
+	 * Normalises the vector down to a length of 1 unit
+	 *
+	 * @public
+	 * @chainable
+	 * @return {Vector}					Returns itself, modified
+	 */
 	normalise() {
 		return this.divideScalar(this.length);
 	}
+	/**
+	 * Clones the vector and normalises it
+	 *
+	 * @public
+	 * @chainable
+	 * @return {Vector}					Returns a clone of itself, modified
+	 */
 	normaliseNew() {
 		return this.divideScalarNew(this.length);
 	}
 
+	/**
+	 * Calculates the distance between this and the supplied vector
+	 *
+	 * @param  {Vector} vector The vector to calculate the distance from
+	 * @return {number}        The distance between this and the supplied vector
+	 */
 	distance(vector) {
 		return this.subtractNew(vector).length;
 	}
 
+	/**
+	 * Calculates the distance on the X axis between this and the supplied vector
+	 *
+	 * @param  {Vector} vector The vector to calculate the distance from
+	 * @return {number}        The distance, along the x axis, between this and the supplied vector
+	 */
 	distanceX(vector) {
 		return this.x - vector.x;
 	}
 
+	/**
+	 * Calculated the distance on the Y axis between this and the supplied vector
+	 *
+	 * @param  {Vector} vector The vector to calculate the distance from
+	 * @return {number}        The distance, along the y axis, between this and the supplied vector
+	 */
 	distanceY(vector) {
 		return this.y - vector.y;
 	}
 
-	dotProduct(vector) {
+
+	/**
+	 * Calculates the dot product between this and a supplied vector
+	 *
+	 * @example
+	 * // returns -14
+	 * new Vector(2, -3).dot(new Vector(-4, 2))
+	 * new Vector(-4, 2).dot(new Vector(2, -3))
+	 * new Vector(2, -4).dot(new Vector(-3, 2))
+	 *
+	 * @param  {Vector} vector The vector object against which to calculate the dot product
+	 * @return {number}        The dot product of the two vectors
+	 */
+	dot(vector) {
 		return (this.x * vector.x) + (this.y * vector.y);
 	}
 
-	crossProduct(vector) {
+	/**
+	 * Calculates the cross product between this and the supplied vector.
+	 *
+	 * @example
+	 * // returns -2
+	 * new Vector(2, -3).cross(new Vector(-4, 2))
+	 * new Vector(-4, 2).cross(new Vector(2, -3))
+	 * // returns 2
+	 * new Vector(2, -4).cross(new Vector(-3, 2))
+	 *
+	 * @param  {Vector} vector The vector object against which to calculate the cross product
+	 * @return {number}        The cross product of the two vectors
+	 */
+	cross(vector) {
 		return (this.x * vector.x) - (this.y * vector.y);
 	}
 
@@ -545,6 +603,32 @@ class Vector {
   get angleInDegrees() {
     return radianToDegrees(Math.atan2(this.y, this.x));
   }
+
+	/**
+	 * (getter/setter) Vector width. This is an alias of x
+	 *
+	 * @alias
+	 * @type {number}
+	 */
+	set width(w) {
+		this.x = w;
+	}
+	get width() {
+		return this.x;
+	}
+
+	/**
+	 * (getter/setter) Vector height. This is an alias of y
+	 *
+	 * @alias
+	 * @type {number}
+	 */
+	set height(h) {
+		this.y = h;
+	}
+	get height() {
+		return this.y;
+	}
 
 }
 
