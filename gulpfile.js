@@ -29,6 +29,9 @@ var files     = {
       entries: './demo/addition/run.js',
       output: './demo/addition'
     }, {
+      entries: './demo/unit-vectors/run.js',
+      output: './demo/unit-vectors'
+    }, {
       entries: './demo/snowflake/run.js',
       output: './demo/snowflake'
     }],

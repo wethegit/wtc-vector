@@ -605,9 +605,9 @@ class Vector {
   }
 
 	/**
-	 * (getter/setter) Vector width. This is an alias of x
+	 * (getter/setter) Vector width.
+   * Alias of {@link Vector#x x}
 	 *
-	 * @alias
 	 * @type {number}
 	 */
 	set width(w) {
@@ -618,9 +618,9 @@ class Vector {
 	}
 
 	/**
-	 * (getter/setter) Vector height. This is an alias of y
+	 * (getter/setter) Vector height.
+   * Alias of {@link Vector#x x}
 	 *
-	 * @alias
 	 * @type {number}
 	 */
 	set height(h) {

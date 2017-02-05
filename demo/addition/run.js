@@ -27,8 +27,6 @@ ready(function() {
   let vd = new DrawingVector(0, 0, '#777777');
   vd.v = va.v.subtractNew(vb.v);
 
-  console.log(va.v.dot(vb.v));
-
   VectorPlayground.init();
   VectorPlayground.addVector(vc);
   VectorPlayground.addVector(va);
