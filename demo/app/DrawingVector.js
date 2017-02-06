@@ -16,22 +16,30 @@ class DrawingVector {
   }
 
   draw(playground) {
-    let offset = playground.offset.addNew(this.offset);
+    let unitX = playground.unitVectorX;
+    let unitY = playground.unitVectorY;
+    let unitVector = unitX.addNew(unitY);
+    // console.clear();
+    // console.log(unitVector, unitX, unitY);
+    let offset = playground.offset.addNew(this.offset.multiplyNew(unitVector)); // creating the offset
     let x = offset.x;
     let y = offset.y;
     let ctx = playground.mainCtx;
+    let translatedVector = this.v.multiplyNew(unitVector);
 
     ctx.beginPath();
     ctx.lineWidth = this.lineWidth;
     ctx.strokeStyle = this.color;
     ctx.moveTo(x, y);
-    x = this.v.x + offset.x;
-    y = this.v.y + offset.y;
+    x = translatedVector.x + offset.x;
+    y = translatedVector.y + offset.y;
     ctx.lineTo(x, y);
 
-    var av1 = this.arrowheadV1.rotateNew(this.v.angle);
-    var av2 = this.arrowheadV2.rotateNew(this.v.angle);
+    // Create the arrow head vectors. These are not dependent upon the unit vector
+    var av1 = this.arrowheadV1.rotateNew(translatedVector.angle);
+    var av2 = this.arrowheadV2.rotateNew(translatedVector.angle);
 
+    // Draw the arrowhead
     ctx.lineTo(av1.x + x, av1.y + y);
     ctx.moveTo(x, y);
     ctx.lineTo(av2.x + x, av2.y + y);

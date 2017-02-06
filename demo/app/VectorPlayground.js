@@ -14,7 +14,7 @@ class VectorPlayground {
     document.body.appendChild(this.mainCanvas);
     document.body.appendChild(this.secondaryCanvas);
 
-    window.addEventListener('resize', this.resizeListener);
+    window.addEventListener('resize', this.resizeListener.bind(this));
     this.resizeListener();
 
     this.vectors = [];
