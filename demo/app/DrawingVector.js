@@ -27,6 +27,14 @@ class DrawingVector {
     let y = offset.y;
     let ctx = playground.mainCtx;
 
+    if(this.outputVector instanceof Vector) {
+      let unitX = playground.unitVectorX; // iHat
+      let unitY = playground.unitVectorY; // jHat
+
+      this.outputVector.x = (this.v.x * unitX.x) + (this.v.y * unitY.x);
+      this.outputVector.y = (this.v.x * unitX.y) + (this.v.y * unitY.y);
+    }
+
     // Translate the vector using linear transformation x(î) + y(j)
     // î = unix X
     // j = unit Y

@@ -72,23 +72,23 @@ class VectorPlayground extends _VectorPlayground {
 
     let xPos = 0;
     while(xPos < xGridSize / 2) {
-      this.gridlines.push(new Gridline(xPos, 0, new Vector(0, yGridSize)));
+      this.gridlines.push(new Gridline(xPos, 0, new Vector(0, yGridSize-2)));
       xPos++;
     }
     xPos = -1;
     while(xPos > -(xGridSize / 2)) {
-      this.gridlines.push(new Gridline(xPos, 0, new Vector(0, yGridSize)));
+      this.gridlines.push(new Gridline(xPos, 0, new Vector(0, yGridSize-2)));
       xPos--;
     }
 
     let yPos = 0;
     while(yPos < yGridSize / 2) {
-      this.gridlines.push(new Gridline(0, yPos, new Vector(xGridSize, 0)));
+      this.gridlines.push(new Gridline(0, yPos, new Vector(xGridSize-2, 0)));
       yPos++;
     }
     yPos = -1;
     while(yPos > -(yGridSize / 2)) {
-      this.gridlines.push(new Gridline(0, yPos, new Vector(xGridSize, 0)));
+      this.gridlines.push(new Gridline(0, yPos, new Vector(xGridSize-2, 0)));
       yPos--;
     }
 
@@ -128,7 +128,7 @@ ready(function() {
   // Notice that they are so much smaller than previously. This is because
   // we're going to rely on the "world's" unit vector to translate these into
   // visibly large values for rendering
-  let va = new DrawingVector(0, -2, colours[0]);
+  let va = new DrawingVector(1, -1, colours[0]);
   let vb = new DrawingVector(0, 1, colours[1]);
   let vc = new DrawingVector(1, 0, colours[2]);
 
@@ -139,6 +139,9 @@ ready(function() {
   // VectorPlayground.unitVectorY = new Vector(0, 100);
   settings._unitVectorX = VectorPlayground.unitVectorX;
   settings._unitVectorY = VectorPlayground.unitVectorY;
+  settings._vector0 = va.v;
+  settings._vector0translate = va.v.clone();
+  va.outputVector = settings._vector0translate;
   settings.startUVX = VectorPlayground.unitVectorX.clone();
   settings.startUVY = VectorPlayground.unitVectorY.clone();
   settings.endUVX = new Vector(0, 1);
@@ -208,4 +211,29 @@ ready(function() {
   scaleControl.onChange(function(value) {
     VectorPlayground.scale = value;
   });
+
+
+  let els = document.querySelectorAll('[data-value]');
+  window.settings = settings;
+  let updateCalculation = function() {
+
+    // console.clear();
+
+    els.forEach(function(el) {
+      let address = el.getAttribute('data-value').split('.');
+      let value = settings;
+      address.forEach(function(address){
+        try {
+          if(value[address] !== 'undefined') value = value[address];
+        } catch (e) {
+
+        }
+      });
+      if(typeof value == 'number') value = Math.round(value * 100) / 100;
+      el.innerText = value;
+    });
+
+    requestAnimationFrame(updateCalculation);
+  }
+  updateCalculation();
 });

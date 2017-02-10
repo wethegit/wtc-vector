@@ -17,3 +17,91 @@ canvas {
 {
   z-index: 1;
 }
+
+.drawer-container {
+  color: #FFF;
+  font-family: helvetica, arial, sans-serif;
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  z-index: 1000;
+}
+
+.drawer-container .drawer {
+  background: RGBA(0,0,0,0.5);
+  box-shadow: inset 0 -50px 100px #000;
+  display: none;
+  padding: 20px;
+}
+.drawer-container label {
+  background: RGBA(0,0,0,0.5);
+  display: block;
+  margin: 0px auto;
+  padding: 10px;
+  width: 100px;
+}
+.drawer-container input {
+  display: none;
+}
+.drawer-container input:checked ~ .drawer {
+  display: block;
+}
+
+.calculation {
+  align-items: center;
+  display: flex;
+}
+.calculation > * {
+  margin: 5px;
+}
+.matrix,
+.vector {
+  border-left: 2px solid #FFF;
+  border-right: 2px solid #FFF;
+  display: inline-flex;
+  padding: 5px;
+  position: relative;
+}
+.vector::before,
+.vector::after,
+.matrix::before,
+.matrix::after {
+  border-top: 2px solid #FFF;
+  border-bottom: 2px solid #FFF;
+  content: '';
+  height: calc(100% - 4px);
+  left: 0px;
+  top: 0px;
+  position: absolute;
+  width: 5px;
+}
+.vector::after,
+.matrix::after {
+  left: auto;
+  right: 0px;
+}
+.matrix--2x2 {
+
+}
+.vector {
+  /*display: inline-block;*/
+  flex-direction: column;
+  text-align: center;
+  padding: 10px;
+}
+.matrix .vector {
+  border: none;
+  flex: 1 1 auto;
+  padding: 5px;
+}
+.matrix .vector::before,
+.matrix .vector::after {
+  display: none;
+}
+
+.color-0,
+.color-0::before,
+.color-0::after {
+  border-color: #c678dd;
+  color: #c678dd;
+}
