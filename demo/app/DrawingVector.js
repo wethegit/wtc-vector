@@ -16,16 +16,27 @@ class DrawingVector {
   }
 
   draw(playground) {
-    let unitX = playground.unitVectorX;
-    let unitY = playground.unitVectorY;
+    let unitX = playground.scaledUnitVectorX; // iHat
+    let unitY = playground.scaledUnitVectorY; // jHat
     let unitVector = unitX.addNew(unitY);
+    let scale = playground.scale;
     // console.clear();
     // console.log(unitVector, unitX, unitY);
     let offset = playground.offset.addNew(this.offset.multiplyNew(unitVector)); // creating the offset
     let x = offset.x;
     let y = offset.y;
     let ctx = playground.mainCtx;
-    let translatedVector = this.v.multiplyNew(unitVector);
+
+    // Translate the vector using linear transformation x(î) + y(j)
+    // î = unix X
+    // j = unit Y
+    //  _       _    _       _
+    // | x(î.x) | + | y(j.x) |
+    // | x(i.y) | + | y(j.y) |
+    //
+    let translatedVector = new Vector(0, 0);
+    translatedVector.x = (this.v.x * unitX.x) + (this.v.y * unitY.x);
+    translatedVector.y = (this.v.x * unitX.y) + (this.v.y * unitY.y);
 
     ctx.beginPath();
     ctx.lineWidth = this.lineWidth;
@@ -34,6 +45,8 @@ class DrawingVector {
     x = translatedVector.x + offset.x;
     y = translatedVector.y + offset.y;
     ctx.lineTo(x, y);
+
+    this.translatedVector = translatedVector;
 
     // Create the arrow head vectors. These are not dependent upon the unit vector
     var av1 = this.arrowheadV1.rotateNew(translatedVector.angle);

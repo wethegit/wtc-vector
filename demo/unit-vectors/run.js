@@ -1,7 +1,7 @@
 import Vector from "../../src/wtc-vector";
 import DrawingVector from "../app/DrawingVector";
 import VectorPlayground from "../app/VectorPlayground";
-import colours from '../app/colours';
+import {colours} from '../app/colours';
 import dat from 'dat-gui';
 
 window.Vector = Vector;
@@ -27,6 +27,7 @@ ready(function() {
   // visibly large values for rendering
   let va = new DrawingVector(1, -2, colours[0]);
   let vb = new DrawingVector(-3, 1, colours[1]);
+  let vc = new DrawingVector(0, -3, colours[2]);
 
   // Initiallising the world
   VectorPlayground.init();
@@ -37,6 +38,7 @@ ready(function() {
   // Add the vectors to stage
   VectorPlayground.addVector(va);
   VectorPlayground.addVector(vb);
+  VectorPlayground.addVector(vc);
 
   // Mousemove to control the unit vectors
   window.addEventListener('mousemove', function(e) {

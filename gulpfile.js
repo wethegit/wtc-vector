@@ -32,6 +32,9 @@ var files     = {
       entries: './demo/unit-vectors/run.js',
       output: './demo/unit-vectors'
     }, {
+      entries: './demo/linear-transformations/run.js',
+      output: './demo/linear-transformations'
+    }, {
       entries: './demo/snowflake/run.js',
       output: './demo/snowflake'
     }],

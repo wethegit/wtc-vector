@@ -3,7 +3,7 @@ import DrawingVector from "./DrawingVector";
 import colours from './colours';
 
 class VectorPlayground {
-  static init(drawing = true) {
+  static init(drawing = true, scale = 100, drawGrid = true) {
     this.initialised = true;
 
     this.mainCanvas = document.createElement('canvas');
@@ -19,8 +19,10 @@ class VectorPlayground {
 
     this.vectors = [];
 
-    this.gridDistance = 100;
+    this.gridDistance = 1;
 
+    this.doDrawGrid = drawGrid;
+    this.scale = scale;
     this.drawing = drawing;
   }
 
@@ -50,7 +52,7 @@ class VectorPlayground {
     this.mainCtx.fill();
     // this.secondarCtx.clearRect(0,0,this.mainCanvas.width, this.mainCanvas.height);
 
-    this.drawGrid();
+    if(this.doDrawGrid) this.drawGrid();
     this.drawVectors();
 
     if( this.drawing ) {
@@ -65,6 +67,9 @@ class VectorPlayground {
   }
 
   static drawGrid() {
+    let scale = this.scale;
+    let gridDistance = this.gridDistance * scale;
+
     // draw the main grid lines
 
     this.mainCtx.lineWidth = 1;
@@ -73,25 +78,25 @@ class VectorPlayground {
 
     let xPos = this.offset.x;
     while(xPos < this.dimensions.width) {
-      xPos += this.gridDistance;
+      xPos += gridDistance;
       this.mainCtx.moveTo(xPos, 0);
       this.mainCtx.lineTo(xPos, this.dimensions.height);
     }
     xPos = this.offset.x;
     while(xPos > 0) {
-      xPos -= this.gridDistance;
+      xPos -= gridDistance;
       this.mainCtx.moveTo(xPos, 0);
       this.mainCtx.lineTo(xPos, this.dimensions.height);
     }
     let yPos = this.offset.y;
     while(yPos < this.dimensions.height) {
-      yPos += this.gridDistance;
+      yPos += gridDistance;
       this.mainCtx.moveTo(0, yPos);
       this.mainCtx.lineTo(this.dimensions.width, yPos);
     }
     yPos = this.offset.y;
     while(yPos > 0) {
-      yPos -= this.gridDistance;
+      yPos -= gridDistance;
       this.mainCtx.moveTo(0, yPos);
       this.mainCtx.lineTo(this.dimensions.width, yPos);
     }
@@ -156,6 +161,12 @@ class VectorPlayground {
   static get unitVectorX() {
     return this._unitVectorX || new Vector(1, 0);
   }
+  static get scaledUnitVectorX() {
+    let scale = this.scale;
+    let uv = this.unitVectorX.clone();
+    if(scale !== 1) uv.multiplyScalar(scale);
+    return uv;
+  }
 
   static set unitVectorY(v) {
     if( v instanceof Vector ) {
@@ -164,6 +175,12 @@ class VectorPlayground {
   }
   static get unitVectorY() {
     return this._unitVectorY || new Vector(0, 1);
+  }
+  static get scaledUnitVectorY() {
+    let scale = this.scale;
+    let uv = this.unitVectorY.clone();
+    if(scale !== 1) uv.multiplyScalar(scale);
+    return uv;
   }
 
   static set dimensions(dims) {
@@ -184,6 +201,21 @@ class VectorPlayground {
     return this._offset || new Vector();
   }
 
+  static set scale(scale) {
+    if(typeof scale === 'number') {
+      this._scale = scale;
+    }
+  }
+  static get scale() {
+    return this._scale || 1;
+  }
+
+  static set doDrawGrid(drawGrid) {
+    this._drawGrid = drawGrid === true;
+  }
+  static get doDrawGrid() {
+    return this._drawGrid || false;
+  }
 
 
 }
