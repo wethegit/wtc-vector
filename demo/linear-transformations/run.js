@@ -129,8 +129,8 @@ ready(function() {
   // we're going to rely on the "world's" unit vector to translate these into
   // visibly large values for rendering
   let va = new DrawingVector(1, -1, colours[0]);
-  let vb = new DrawingVector(0, 1, colours[1]);
-  let vc = new DrawingVector(1, 0, colours[2]);
+  let vb = new DrawingVector(1, 0, colours[1]);
+  let vc = new DrawingVector(0, 1, colours[2]);
 
   // Initiallising the world
   VectorPlayground.init();

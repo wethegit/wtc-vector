@@ -105,3 +105,15 @@ canvas {
   border-color: #c678dd;
   color: #c678dd;
 }
+.color-1,
+.color-1::before,
+.color-1::after {
+  border-color: #98c379;
+  color: #98c379;
+}
+.color-2,
+.color-2::before,
+.color-2::after {
+  border-color: #c34448;
+  color: #c34448;
+}
