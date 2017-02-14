@@ -3,6 +3,7 @@ import DrawingVector from "../app/DrawingVector";
 import _VectorPlayground from "../app/VectorPlayground";
 import {colours} from '../app/colours';
 import dat from 'dat-gui';
+import updateCalculation from '../app/calcUpdate';
 
 window.Vector = Vector;
 
@@ -26,7 +27,6 @@ class Gridline {
     this.color = '#01a7f9';
 
     if(x == 0 && y == 0) {
-      console.log(this.position);
       this.trace = true;
     }
 
@@ -152,10 +152,6 @@ ready(function() {
   VectorPlayground.addVector(vb);
   VectorPlayground.addVector(vc);
 
-  window.readVector = function() {
-    console.log(vb.v, VectorPlayground.unitVectorX, VectorPlayground.unitVectorY, vb.translatedVector);
-  }
-
   // Animation
   let update = function() {
 
@@ -200,8 +196,8 @@ ready(function() {
     settings._unitVectorY.y = VectorPlayground.unitVectorY.y;
   });
   let t_unitX = gui.addFolder('Translated Unit X');
-  let t_unitX_x = t_unitX.add(settings._unitVectorX, 'x').listen();
-  let t_unitX_y = t_unitX.add(settings._unitVectorX, 'y').listen();
+  let t_unitX_x = t_unitX.add(settings._unitVectorX, '_x').listen();
+  let t_unitX_y = t_unitX.add(settings._unitVectorX, '_y').listen();
   let t_unitY = gui.addFolder('Translated Unit Y');
   let t_unitY_x = t_unitY.add(settings._unitVectorY, 'x').listen();
   let t_unitY_y = t_unitY.add(settings._unitVectorY, 'y').listen();
@@ -212,28 +208,5 @@ ready(function() {
     VectorPlayground.scale = value;
   });
 
-
-  let els = document.querySelectorAll('[data-value]');
-  window.settings = settings;
-  let updateCalculation = function() {
-
-    // console.clear();
-
-    els.forEach(function(el) {
-      let address = el.getAttribute('data-value').split('.');
-      let value = settings;
-      address.forEach(function(address){
-        try {
-          if(value[address] !== 'undefined') value = value[address];
-        } catch (e) {
-
-        }
-      });
-      if(typeof value == 'number') value = Math.round(value * 100) / 100;
-      el.innerText = value;
-    });
-
-    requestAnimationFrame(updateCalculation);
-  }
-  updateCalculation();
+  updateCalculation(settings);
 });

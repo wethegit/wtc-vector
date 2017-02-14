@@ -2,11 +2,41 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Vector addition proof</title>
+    <title>Vector - V addition proof</title>
     <script src="pub.js"></script>
     <link rel="stylesheet" href="../index.css" />
   </head>
   <body>
-
+    <div class="drawer-container">
+      <label for="drawer">Details</label>
+      <input type="checkbox" name="drawer" id="drawer" />
+      <div class="drawer">
+        <h1>Vector Addition</h1>
+        <p>This proof shows that <span class="color-0">V<sup>a</sup></span> + <span class="color-1">V<sup>b</sup></span> = <span>V<sup>c</sup></span></p>
+        <p>For this example, we're positioning <span class="color-1">V<sup>b</sup></span> so that it originates from the end of <span class="color-0">V<sup>a</sup></span> to illustrate this relationship. </p>
+        <p>Click <strong>animating</strong> to see the affect that rotating the vector has on this procedure.</p>
+        <div class="calculation">
+          <div class="vector vector--2 color-0">
+            <div class="value" data-value="_vector0._x">1</div>
+            <div class="value" data-value="_vector0._y">-2</div>
+          </div>
+          <span>+</span>
+          <div class="vector vector--2 color-1">
+            <div class="value" data-value="_vector1._x">-3</div>
+            <div class="value" data-value="_vector1._y">1</div>
+          </div>
+          <span>=</span>
+          <div class="vector vector--2">
+            <div class="value"> <span class="color-0" data-value="_vector0._x">0</span> + <span class="color-1" data-value="_vector1._x">0</span></div>
+            <div class="value"> <span class="color-0" data-value="_vector0._y">0</span> + <span class="color-1" data-value="_vector1._y">0</span></div>
+          </div>
+          <span>=</span>
+          <div class="vector vector--2">
+            <div class="value" data-value="_vector2._x">1.5</div>
+            <div class="value" data-value="_vector2._y">-1.5</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

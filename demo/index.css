@@ -18,6 +18,22 @@ canvas {
   z-index: 1;
 }
 
+h1, h2, h3, h4, h5 {
+  margin-bottom: 0.3em;
+}
+h1 {
+  font-size: 1.3em;
+}
+h1:first-child {
+  margin-top: 0;
+}
+h1 ~ p {
+  margin-top: 0px;
+}
+p {
+  margin: 0.3em 0;
+}
+
 .drawer-container {
   color: #FFF;
   font-family: helvetica, arial, sans-serif;
