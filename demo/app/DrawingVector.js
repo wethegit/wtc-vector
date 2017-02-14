@@ -67,6 +67,23 @@ class DrawingVector {
 
     ctx.stroke();
 
+    let label = this.label;
+    if(label) {
+      let labelPoint = this.v.divideScalarNew(2);
+      let textloc = new Vector(0, 0);
+      textloc.x = (labelPoint.x * unitX.x) + (labelPoint.y * unitY.x) + offset.x;
+      textloc.y = (labelPoint.x * unitX.y) + (labelPoint.y * unitY.y) + offset.y;
+
+      ctx.font = "10px Helvetica, Arial, sans-serif";
+      let textdims = ctx.measureText(label);
+      let padding = 3;
+      textdims.height = 10;
+      ctx.fillStyle = 'rgba(0,0,0,0.7)';
+      ctx.fillRect(textloc.x - padding - textdims.width / 2, textloc.y - padding - textdims.height / 2, textdims.width + padding * 2, textdims.height + padding * 2);
+      ctx.fillStyle = this.color;
+      ctx.fillText(label,textloc.x - textdims.width / 2, textloc.y - textdims.height / 2 + textdims.height - textdims.height / 4);
+    }
+
   }
 
   get playground() {
@@ -95,6 +112,17 @@ class DrawingVector {
       this._offset = new Vector(0,0);
     }
     return this._offset;
+  }
+
+  set label(label) {
+    if(label) {
+      this._label = label;
+    } else {
+      this._label = null;
+    }
+  }
+  get label() {
+    return this._label || null;
   }
 }
 

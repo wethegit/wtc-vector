@@ -21,15 +21,19 @@ function ready(fn) {
 ready(function() {
 
   let va = new DrawingVector(1, -2, colours[0]);
+  va.label = `[ 1, -2 ]`;
   let vb = new DrawingVector(-3, 1, colours[1]);
+  vb.label = `[ -3, 1 ]`;
   settings._vector0 = va.v;
   settings._vector1 = vb.v;
   vb.offset = va.v;
   let vc = new DrawingVector(0, 0, '#CCCCCC');
   vc.v = va.v.addNew(vb.v);
   settings._vector2 = vc.v;
+  vc.label = `[ ${vc.v.x}, ${vc.v.y} ]`;
   let vd = new DrawingVector(0, 0, '#777777');
   vd.v = va.v.subtractNew(vb.v);
+  vd.label = `subtraction`;
 
   VectorPlayground.init();
   VectorPlayground.addVector(vc);
@@ -53,8 +57,15 @@ ready(function() {
     // Update Vector D based on the addition of the two components
     vd.v = va.v.subtractNew(vb.v);
 
+    // Update the settings variables
     settings._vector0 = va.v;
     settings._vector2 = vc.v;
+
+    // update the labels
+    va.label = `[ ${Math.round(va.v.x * 100) / 100}, ${Math.round(va.v.y * 100) / 100} ]`;
+    vb.label = `[ ${Math.round(vb.v.x * 100) / 100}, ${Math.round(vb.v.y * 100) / 100} ]`;
+    vc.label = `[ ${Math.round(vc.v.x * 100) / 100}, ${Math.round(vc.v.y * 100) / 100} ]`;
+    vd.label = `subtraction [ ${Math.round(vd.v.x * 100) / 100}, ${Math.round(vd.v.y * 100) / 100} ]`;
 
   }
 
