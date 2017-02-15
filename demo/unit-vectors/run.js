@@ -90,11 +90,11 @@ ready(function() {
       update();
     }
   });
-  let f_unitX = gui.addFolder('Unit X');
+  let f_unitX = gui.addFolder('Unit X (i)');
   prec.push(f_unitX.add(VectorPlayground.unitVectorX, 'x').listen());
   prec.push(f_unitX.add(VectorPlayground.unitVectorX, 'y').listen());
   prec.push(f_unitX.add(VectorPlayground.unitVectorX, 'length').listen());
-  let f_unitY = gui.addFolder('Unit Y');
+  let f_unitY = gui.addFolder('Unit Y (j)');
   prec.push(f_unitY.add(VectorPlayground.unitVectorY, 'x').listen());
   prec.push(f_unitY.add(VectorPlayground.unitVectorY, 'y').listen());
   prec.push(f_unitY.add(VectorPlayground.unitVectorY, 'length').listen());
