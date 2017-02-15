@@ -28,28 +28,20 @@ ready(function() {
   let va = new DrawingVector(1, -2, colours[0]);
   let vb = new DrawingVector(-3, 1, colours[1]);
   let vc = new DrawingVector(0, -3, colours[2]);
+  va.label = '[ 1, -2 ]';
+  vb.label = '[ -3, 1 ]';
+  vc.label = '[ 0, -3 ]';
 
   // Initiallising the world
   VectorPlayground.init();
-  // Adding the initial unit vectors
-  VectorPlayground.unitVectorX = new Vector(settings.unitX, 0);
-  VectorPlayground.unitVectorY = new Vector(0, settings.unitY);
+
+  VectorPlayground.unitVectorX = new Vector(1, 0);
+  VectorPlayground.unitVectorY = new Vector(0, 1);
 
   // Add the vectors to stage
   VectorPlayground.addVector(va);
   VectorPlayground.addVector(vb);
   VectorPlayground.addVector(vc);
-
-  // Mousemove to control the unit vectors
-  window.addEventListener('mousemove', function(e) {
-    var dimensions = new Vector(window.innerWidth, window.innerHeight).divideScalar(2);
-    var mousepos = new Vector(e.clientX, e.clientY).subtract(VectorPlayground.offset).divide(dimensions).multiplyScalar(200);
-    settings.unitX = mousepos.x;
-    settings.unitY = mousepos.y;
-
-    VectorPlayground.unitVectorX = new Vector(settings.unitX, 0);
-    VectorPlayground.unitVectorY = new Vector(0, settings.unitY);
-  });
 
   // Animation
   let update = function() {
@@ -67,6 +59,7 @@ ready(function() {
   update();
 
   // Set up the dat gui
+  let prec = [];
   var gui = new dat.GUI();
   var animationControl = gui.add(settings, 'animating');
   animationControl.onChange(function(value) {
@@ -74,14 +67,16 @@ ready(function() {
       update();
     }
   });
-  var unitX = gui.add(settings, 'unitX').listen();
-  var unitY = gui.add(settings, 'unitY').listen();
-  unitX.onChange(function(value) {
-    if(typeof value !== 'number') return;
-    VectorPlayground.unitVectorX = new Vector(value, 0);
-  });
-  unitY.onChange(function(value) {
-    if(typeof value !== 'number') return;
-    VectorPlayground.unitVectorY = new Vector(0, value);
+  let f_unitX = gui.addFolder('Unit X');
+  prec.push(f_unitX.add(VectorPlayground.unitVectorX, 'x').listen());
+  prec.push(f_unitX.add(VectorPlayground.unitVectorX, 'y').listen());
+  prec.push(f_unitX.add(VectorPlayground.unitVectorX, 'length').listen());
+  let f_unitY = gui.addFolder('Unit Y');
+  prec.push(f_unitY.add(VectorPlayground.unitVectorY, 'x').listen());
+  prec.push(f_unitY.add(VectorPlayground.unitVectorY, 'y').listen());
+  prec.push(f_unitY.add(VectorPlayground.unitVectorY, 'length').listen());
+  prec.forEach(function(control) {
+    control.__precision = 3;
+    control.__impliedStep = 0.05;
   });
 });
