@@ -1,5 +1,5 @@
 import Vector from "../../src/wtc-vector";
-import DrawingVector from "../app/DrawingVector";
+import _DrawingVector from "../app/DrawingVector";
 import _VectorPlayground from "../app/VectorPlayground";
 import {colours} from '../app/colours';
 import dat from 'dat-gui';
@@ -113,6 +113,29 @@ class VectorPlayground extends _VectorPlayground {
   }
 }
 
+class DrawingVector extends _DrawingVector {
+
+  constructor() {
+    super(...arguments);
+
+    this._v = this.v;
+  }
+
+  draw(playground) {
+    let textLabel = '';
+    if(this.textLabel) textLabel = `${this.textLabel} : `;
+    this.label = `${textLabel}[ ${Math.round(this._v.x * 100) / 100}, ${Math.round(this._v.y * 100) / 100} ]`;
+    super.draw(playground);
+  }
+
+  set textLabel(label) {
+    this._textLabel = label;
+  }
+  get textLabel() {
+    return this._textLabel || '';
+  }
+}
+
 window.VectorPlayground = VectorPlayground;
 
 function ready(fn) {
@@ -128,9 +151,12 @@ ready(function() {
   // Notice that they are so much smaller than previously. This is because
   // we're going to rely on the "world's" unit vector to translate these into
   // visibly large values for rendering
-  let va = new DrawingVector(1, -1, colours[0]);
-  let vb = new DrawingVector(1, 0, colours[1]);
-  let vc = new DrawingVector(0, 1, colours[2]);
+  let va = new DrawingVector(2, -2, colours[0]); // The vector on the vector space
+  let vb = new DrawingVector(1, 0, colours[1]); // A graphical representation of the X unit vector
+  let vc = new DrawingVector(0, 1, colours[2]); // A graphical representation of the Y unit vector
+  va.textLabel = 'Vc';
+  vb.textLabel = 'i';
+  vc.textLabel = 'j';
 
   // Initiallising the world
   VectorPlayground.init();
@@ -146,6 +172,7 @@ ready(function() {
   settings.startUVY = VectorPlayground.unitVectorY.clone();
   settings.endUVX = new Vector(0, 1);
   settings.endUVY = new Vector(-1, 0);
+  settings.vector = va.v;
 
   // Add the vectors to stage
   VectorPlayground.addVector(va);
@@ -175,12 +202,13 @@ ready(function() {
       update();
     }
   });
+  let prec = [];
   let f_unitX = gui.addFolder('End Unit X');
-  let unitX_x = f_unitX.add(settings.endUVX, 'x');
-  let unitX_y = f_unitX.add(settings.endUVX, 'y');
+  prec.push(f_unitX.add(settings.endUVX, 'x'));
+  prec.push(f_unitX.add(settings.endUVX, 'y'));
   let f_unitY = gui.addFolder('End Unit Y');
-  let unitY_x = f_unitY.add(settings.endUVY, 'x');
-  let unitY_y = f_unitY.add(settings.endUVY, 'y');
+  prec.push(f_unitY.add(settings.endUVY, 'x'));
+  prec.push(f_unitY.add(settings.endUVY, 'y'));
   let time = gui.add(settings, 'time', 0, settings.increments);
   time.onChange(function(value) {
     let diffX = settings.endUVX.subtractNew(settings.startUVX);
@@ -194,18 +222,30 @@ ready(function() {
     settings._unitVectorX.y = VectorPlayground.unitVectorX.y;
     settings._unitVectorY.x = VectorPlayground.unitVectorY.x;
     settings._unitVectorY.y = VectorPlayground.unitVectorY.y;
+    settings.vector.x = va.v.x;
+    settings.vector.y = va.v.y;
+
+    vb._v = settings._unitVectorX;
+    vc._v = settings._unitVectorY;
   });
-  let t_unitX = gui.addFolder('Translated Unit X');
-  let t_unitX_x = t_unitX.add(settings._unitVectorX, '_x').listen();
-  let t_unitX_y = t_unitX.add(settings._unitVectorX, '_y').listen();
-  let t_unitY = gui.addFolder('Translated Unit Y');
-  let t_unitY_x = t_unitY.add(settings._unitVectorY, 'x').listen();
-  let t_unitY_y = t_unitY.add(settings._unitVectorY, 'y').listen();
-  t_unitY.open();
-  t_unitX.open();
+  // let t_unitX = gui.addFolder('Translated Unit X');
+  // prec.push(t_unitX.add(settings._unitVectorX, 'x').listen());
+  // prec.push(t_unitX.add(settings._unitVectorX, 'y').listen());
+  // let t_unitY = gui.addFolder('Translated Unit Y');
+  // prec.push(t_unitY.add(settings._unitVectorY, 'x').listen());
+  // prec.push(t_unitY.add(settings._unitVectorY, 'y').listen());
+  // t_unitY.open();
+  // t_unitX.open();
+  let t_V = gui.addFolder('Vector');
+  prec.push(t_V.add(settings.vector, 'x').listen());
+  prec.push(t_V.add(settings.vector, 'y').listen());
   var scaleControl = gui.add(settings, 'scale');
   scaleControl.onChange(function(value) {
     VectorPlayground.scale = value;
+  });
+  prec.forEach(function(control) {
+    control.__precision = 3;
+    control.__impliedStep = 0.1;
   });
 
   updateCalculation(settings);
