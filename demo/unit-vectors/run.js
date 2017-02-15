@@ -1,7 +1,7 @@
 import Vector from "../../src/wtc-vector";
-import DrawingVector from "../app/DrawingVector";
+import _DrawingVector from "../app/DrawingVector";
 import VectorPlayground from "../app/VectorPlayground";
-import {colours} from '../app/colours';
+import {colours, namedColours} from '../app/colours';
 import dat from 'dat-gui';
 
 window.Vector = Vector;
@@ -10,6 +10,25 @@ let settings = {
   animating: false,
   unitX: 100,
   unitY: 100
+}
+
+class DrawingVector extends _DrawingVector {
+  constructor(x, y, color, lineWidth = 2, secondary = false, basis, offset) {
+
+    super(x, y, color, lineWidth);
+
+    this.secondary = secondary;
+    this.basis = basis;
+    if(offset instanceof Vector) this.offset = offset;
+
+    if(this.secondary) {
+      this.label = ` ${basis === 'j' ? y : x}${basis} `;
+    } else {
+      this.label = `[ ${x}, ${y} ]`;
+    }
+
+  }
+
 }
 
 function ready(fn) {
@@ -23,14 +42,18 @@ ready(function() {
 
   // Setting up our basic vectors
   // Notice that they are so much smaller than previously. This is because
-  // we're going to rely on the "world's" unit vector to translate these into
-  // visibly large values for rendering
-  let va = new DrawingVector(1, -2, colours[0]);
-  let vb = new DrawingVector(-3, 1, colours[1]);
-  let vc = new DrawingVector(0, -3, colours[2]);
-  va.label = '[ 1, -2 ]';
-  vb.label = '[ -3, 1 ]';
-  vc.label = '[ 0, -3 ]';
+  // we're going to rely on the "world's" unit vector and scale to translate
+  // these into visibly large values for rendering
+  let vectors = [];
+  vectors.push(new DrawingVector(1, -2, colours[0]));
+  vectors.push(new DrawingVector(1, 0, namedColours.silver, 1, true, 'i'));
+  vectors.push(new DrawingVector(0, -2, namedColours.silver, 1, true, 'j', new Vector(1, 0)));
+  vectors.push(new DrawingVector(-3, 1, colours[1]));
+  vectors.push(new DrawingVector(-3, 0, namedColours.silver, 1, true, 'i'));
+  vectors.push(new DrawingVector(0, 1, namedColours.silver, 1, true, 'j', new Vector(-3, 0)));
+  vectors.push(new DrawingVector(-0.5, -3, colours[2]));
+  vectors.push(new DrawingVector(-0.5, 0, namedColours.silver, 1, true, 'i'));
+  vectors.push(new DrawingVector(0, -3, namedColours.silver, 1, true, 'j', new Vector(-0.5, 0)));
 
   // Initiallising the world
   VectorPlayground.init();
@@ -39,9 +62,9 @@ ready(function() {
   VectorPlayground.unitVectorY = new Vector(0, 1);
 
   // Add the vectors to stage
-  VectorPlayground.addVector(va);
-  VectorPlayground.addVector(vb);
-  VectorPlayground.addVector(vc);
+  vectors.forEach(function(vector) {
+    VectorPlayground.addVector(vector);
+  });
 
   // Animation
   let update = function() {
@@ -49,7 +72,7 @@ ready(function() {
     if(settings.animating) {
 
       // Update the angle of the vector
-      va.v.angle += 0.01;
+      vectors[0].v.angle += 0.01;
 
       requestAnimationFrame(update);
     }

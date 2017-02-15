@@ -22,7 +22,18 @@ class DrawingVector {
     let scale = playground.scale;
     // console.clear();
     // console.log(unitVector, unitX, unitY);
-    let offset = playground.offset.addNew(this.offset.multiplyNew(unitVector)); // creating the offset
+    let offset = this.offset;
+    // Gtting the offset of the vector and, if it has length, setting up the
+    // translated offset
+    if(this.offset instanceof Vector) {
+      offset = this.offset.clone();
+      offset.x = (this.offset.x * unitX.x) + (this.offset.y * unitY.x);
+      offset.y = (this.offset.x * unitX.y) + (this.offset.y * unitY.y);
+    } else {
+      offset = new Vector(0, 0);
+    }
+    // Adding the playground's offset to it (origin point)
+    offset.add(playground.offset);
     let x = offset.x;
     let y = offset.y;
     let ctx = playground.mainCtx;
@@ -108,10 +119,10 @@ class DrawingVector {
     }
   }
   get offset() {
-    if( !(this._offset instanceof Vector) ) {
-      this._offset = new Vector(0,0);
-    }
-    return this._offset;
+    // if( !(this._offset instanceof Vector) ) {
+    //   this._offset = new Vector(0,0);
+    // }
+    return this._offset || false;
   }
 
   set label(label) {
