@@ -35,6 +35,9 @@ var files     = {
       entries: './demo/linear-transformations/run.js',
       output: './demo/linear-transformations'
     }, {
+      entries: './demo/matrix-multiplication/run.js',
+      output: './demo/matrix-multiplication'
+    }, {
       entries: './demo/snowflake/run.js',
       output: './demo/snowflake'
     }],

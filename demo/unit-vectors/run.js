@@ -82,6 +82,7 @@ ready(function() {
   update();
 
   // Set up the dat gui
+  dat.utils.requestAnimationFrame = window.requestAnimationFrame;
   let prec = [];
   var gui = new dat.GUI();
   var animationControl = gui.add(settings, 'animating');
@@ -90,16 +91,18 @@ ready(function() {
       update();
     }
   });
+  var catesianControl = gui.add(VectorPlayground, 'cartesian');
   let f_unitX = gui.addFolder('Unit X (i)');
-  prec.push(f_unitX.add(VectorPlayground.unitVectorX, 'x').listen());
-  prec.push(f_unitX.add(VectorPlayground.unitVectorX, 'y').listen());
+  prec.push(f_unitX.add(VectorPlayground.unitVectorX, '_x').listen());
+  prec.push(f_unitX.add(VectorPlayground.unitVectorX, '_y').listen());
   prec.push(f_unitX.add(VectorPlayground.unitVectorX, 'length').listen());
   let f_unitY = gui.addFolder('Unit Y (j)');
-  prec.push(f_unitY.add(VectorPlayground.unitVectorY, 'x').listen());
-  prec.push(f_unitY.add(VectorPlayground.unitVectorY, 'y').listen());
+  prec.push(f_unitY.add(VectorPlayground.unitVectorY, '_x').listen());
+  prec.push(f_unitY.add(VectorPlayground.unitVectorY, '_y').listen());
   prec.push(f_unitY.add(VectorPlayground.unitVectorY, 'length').listen());
   prec.forEach(function(control) {
     control.__precision = 3;
     control.__impliedStep = 0.05;
   });
+  window.prec = prec;
 });

@@ -198,7 +198,8 @@ class VectorPlayground {
     }
   }
   static get offset() {
-    return this._offset || new Vector();
+    let offset = this._offset || new Vector();
+    return offset;
   }
 
   static set scale(scale) {
@@ -215,6 +216,13 @@ class VectorPlayground {
   }
   static get doDrawGrid() {
     return this._drawGrid || false;
+  }
+
+  static set cartesian(isCartesian) {
+    this.isCartesian = isCartesian === true;
+  }
+  static get cartesian() {
+    return this.isCartesian || false;
   }
 
 
