@@ -630,6 +630,16 @@ class Vector {
 		return this.y;
 	}
 
+	/**
+	 * (getter/setter) Vector area.
+	 * @readonly
+	 *
+	 * @type {number}
+	 */
+	get area() {
+		return this.x * this.y;
+	}
+
 }
 
 export default Vector;
