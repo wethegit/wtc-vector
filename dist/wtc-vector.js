@@ -782,6 +782,19 @@ var Vector = function () {
     get: function get() {
       return this.y;
     }
+
+    /**
+     * (getter/setter) Vector area.
+     * @readonly
+     *
+     * @type {number}
+     */
+
+  }, {
+    key: 'area',
+    get: function get() {
+      return this.x * this.y;
+    }
   }]);
 
   return Vector;
