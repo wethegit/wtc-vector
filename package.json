@@ -1,12 +1,12 @@
 {
   "name": "wtc-vector",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "ES6 2D Vector Class",
   "main": "dist/wtc-vector.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx babel src/ --presets env --out-dir dist",
-    "build-es5": "browserify ./src/wtc-vector.js -o ./dist/es5-bundle.js -t [babelify --presets [\"@babel/preset-env\"]]",
+    "build-es5": "browserify ./src/wtc-vector.js --standalone WTCVector > ./dist/es5-bundle.js",
     "prepublish": "npm run build"
   },
   "devDependencies": {
