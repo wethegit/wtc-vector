@@ -795,6 +795,24 @@ var Vector = function () {
     get: function get() {
       return this.x * this.y;
     }
+
+    /**
+     * (getter/setter) Vector slope.
+     *
+     * @type {number}
+     */
+
+  }, {
+    key: 'slope',
+    set: function set(value) {
+      if (!isNaN(value)) {
+        var angle = Math.atan(value);
+        this.angle = angle;
+      }
+    },
+    get: function get() {
+      return this.y / this.x;
+    }
   }]);
 
   return Vector;
