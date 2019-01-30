@@ -1,6 +1,6 @@
 {
   "name": "wtc-vector",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "ES6 2D Vector Class",
   "main": "dist/wtc-vector.js",
   "scripts": {

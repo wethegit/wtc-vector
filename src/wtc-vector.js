@@ -640,6 +640,21 @@ class Vector {
 		return this.x * this.y;
 	}
 
+	/**
+	 * (getter/setter) Vector slope.
+	 *
+	 * @type {number}
+	 */
+  set slope(value) {
+    if(!isNaN(value)) {
+      let angle = Math.atan(value);
+      this.angle = angle;
+    }
+  }
+  get slope() {
+    return this.y / this.x;
+  }
+
 }
 
 export default Vector;
