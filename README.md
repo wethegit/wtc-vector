@@ -8,6 +8,23 @@ let vForce = new Vector(0, 1);
 vPosition.add(vForce); // [0, 11];
 ```
 
+## Using the es5 bundle in browser
+```
+npm install --save wtc-vector
+```
+### Using gulp
+Add the final module to your JS bundle.
+```
+...JS bundle logic
+node_modules/wtc-vector/dist/es5-bundle.js
+```
+The module will then be exposed inside ```window``` as ```window.WTCVector.default```
+#### Example
+```
+<script>
+  var vector = new window.WTCVector.default(0,0);
+</script>
+```
 ## Documentation
 Documentation can be found [here](https://wethegit.github.io/wtc-vector/docs/)
 

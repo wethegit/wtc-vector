@@ -60,7 +60,7 @@ gulp.task('build', function() {
       debug: true
     });
 
-    b.transform("babelify", {presets: ["es2015"]});
+    b.transform("babelify", {presets: ["env"]});
     return b.bundle()
       .pipe(source('pub.js'))
       .pipe(buffer())
