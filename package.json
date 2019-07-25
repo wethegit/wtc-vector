@@ -1,32 +1,32 @@
 {
   "name": "wtc-vector",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "ES6 2D Vector Class",
   "main": "dist/wtc-vector.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx babel src/ --presets env --out-dir dist",
+    "build": "npx babel src/ --presets @babel/env --out-dir dist",
     "build-es5": "browserify ./src/wtc-vector.js --standalone WTCVector > ./dist/es5-bundle.js",
     "prepublish": "npm run build && npm run build-es5"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "babelify": "^8.0.0",
-    "browserify": "^13.1.0",
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "babelify": "^10.0.0",
+    "browserify": "^16.3.0",
     "dat-gui": "^0.5.0",
-    "dat.gui": "^0.6.1",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^7.0.1",
-    "gulp-jsdoc3": "^1.0.1",
-    "gulp-notify": "^2.2.0",
-    "gulp-uglify": "^2.0.0",
+    "dat.gui": "^0.7.6",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-jsdoc3": "^2.0.0",
+    "gulp-notify": "^3.2.0",
+    "gulp-uglify": "^3.0.2",
     "gulp-webserver": "^0.9.1",
-    "jaguarjs-jsdoc": "^1.0.1",
-    "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.9.0"
+    "jaguarjs-jsdoc": "^1.1.0",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0",
+    "watchify": "^3.11.1"
   },
   "repository": {
     "type": "git",
@@ -41,7 +41,6 @@
   "homepage": "https://github.com/wethegit/wtc-vector#readme",
   "author": "Liam Egan <liam@wethecollective.com> (http://wethecollective.com)",
   "license": "ISC",
-  "dependencies": {},
   "browserify": {
     "transform": [
       "babelify"

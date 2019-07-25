@@ -1,12 +1,15 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+exports["default"] = void 0;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 var conversionFactor = 180 / Math.PI;
 
@@ -17,7 +20,6 @@ var radianToDegrees = function radianToDegrees(radian) {
 var degreesToRadian = function degreesToRadian(degrees) {
   return degrees / conversionFactor;
 };
-
 /**
  * A basic 2D Vector class that provides simple algebraic functionality in the form
  * of 2D Vectors.
@@ -31,8 +33,10 @@ var degreesToRadian = function degreesToRadian(degrees) {
  * @created Dec 19, 2016
  */
 
-var Vector = function () {
 
+var Vector =
+/*#__PURE__*/
+function () {
   /**
    * The Vector Class constructor
    *
@@ -46,7 +50,6 @@ var Vector = function () {
     this.x = x;
     this.y = y;
   }
-
   /**
    * Resets the vector coordinates
    *
@@ -57,12 +60,26 @@ var Vector = function () {
 
 
   _createClass(Vector, [{
-    key: 'reset',
+    key: "reset",
     value: function reset(x, y) {
       this.x = x;
       this.y = y;
     }
+    /**
+     * Resets the vector coordinates to another vector object
+     *
+     * @public
+    * @param {Vector} v 				The vector object to use to reset the coordinates
+     */
 
+  }, {
+    key: "resetToVector",
+    value: function resetToVector(v) {
+      if (v instanceof Vector) {
+        this.x = v.x;
+        this.y = v.y;
+      }
+    }
     /**
      * Clones the vector
      *
@@ -71,11 +88,10 @@ var Vector = function () {
      */
 
   }, {
-    key: 'clone',
+    key: "clone",
     value: function clone() {
       return new Vector(this.x, this.y);
     }
-
     /**
      * Adds one vector to another.
      *
@@ -86,7 +102,7 @@ var Vector = function () {
      */
 
   }, {
-    key: 'add',
+    key: "add",
     value: function add(vector) {
       this.x += vector.x;
       this.y += vector.y;
@@ -102,12 +118,11 @@ var Vector = function () {
      */
 
   }, {
-    key: 'addNew',
+    key: "addNew",
     value: function addNew(vector) {
       var v = this.clone();
       return v.add(vector);
     }
-
     /**
      * Adds a scalar to the vector, modifying both the x and y
      *
@@ -118,7 +133,7 @@ var Vector = function () {
      */
 
   }, {
-    key: 'addScalar',
+    key: "addScalar",
     value: function addScalar(scalar) {
       return this.add(new Vector(scalar, scalar));
     }
@@ -132,12 +147,11 @@ var Vector = function () {
      */
 
   }, {
-    key: 'addScalarNew',
+    key: "addScalarNew",
     value: function addScalarNew(scalar) {
       var v = this.clone();
       return v.addScalar(scalar);
     }
-
     /**
      * Subtracts one vector from another.
      *
@@ -148,7 +162,7 @@ var Vector = function () {
      */
 
   }, {
-    key: 'subtract',
+    key: "subtract",
     value: function subtract(vector) {
       this.x -= vector.x;
       this.y -= vector.y;
@@ -164,12 +178,11 @@ var Vector = function () {
      */
 
   }, {
-    key: 'subtractNew',
+    key: "subtractNew",
     value: function subtractNew(vector) {
       var v = this.clone();
       return v.subtract(vector);
     }
-
     /**
      * Subtracts a scalar from the vector, modifying both the x and y
      *
@@ -180,7 +193,7 @@ var Vector = function () {
      */
 
   }, {
-    key: 'subtractScalar',
+    key: "subtractScalar",
     value: function subtractScalar(scalar) {
       return this.subtract(new Vector(scalar, scalar));
     }
@@ -194,12 +207,11 @@ var Vector = function () {
      */
 
   }, {
-    key: 'subtractScalarNew',
+    key: "subtractScalarNew",
     value: function subtractScalarNew(scalar) {
       var v = this.clone();
       return v.subtractScalar(scalar);
     }
-
     /**
      * Divides one vector by another.
      *
@@ -210,18 +222,20 @@ var Vector = function () {
      */
 
   }, {
-    key: 'divide',
+    key: "divide",
     value: function divide(vector) {
       if (vector.x !== 0) {
         this.x /= vector.x;
       } else {
         this.x = 0;
       }
+
       if (vector.y !== 0) {
         this.y /= vector.y;
       } else {
         this.y = 0;
       }
+
       return this;
     }
     /**
@@ -234,12 +248,11 @@ var Vector = function () {
      */
 
   }, {
-    key: 'divideNew',
+    key: "divideNew",
     value: function divideNew(vector) {
       var v = this.clone();
       return v.divide(vector);
     }
-
     /**
      * Divides the vector by a scalar.
      *
@@ -250,7 +263,7 @@ var Vector = function () {
      */
 
   }, {
-    key: 'divideScalar',
+    key: "divideScalar",
     value: function divideScalar(scalar) {
       var v = new Vector(scalar, scalar);
       return this.divide(v);
@@ -265,12 +278,11 @@ var Vector = function () {
      */
 
   }, {
-    key: 'divideScalarNew',
+    key: "divideScalarNew",
     value: function divideScalarNew(scalar) {
       var v = this.clone();
       return v.divideScalar(scalar);
     }
-
     /**
      * Multiplies one vector by another.
      *
@@ -281,7 +293,7 @@ var Vector = function () {
      */
 
   }, {
-    key: 'multiply',
+    key: "multiply",
     value: function multiply(vector) {
       this.x *= vector.x;
       this.y *= vector.y;
@@ -297,12 +309,11 @@ var Vector = function () {
      */
 
   }, {
-    key: 'multiplyNew',
+    key: "multiplyNew",
     value: function multiplyNew(vector) {
       var v = this.clone();
       return v.multiply(vector);
     }
-
     /**
      * Multiplies the vector by a scalar.
      *
@@ -313,7 +324,7 @@ var Vector = function () {
      */
 
   }, {
-    key: 'multiplyScalar',
+    key: "multiplyScalar",
     value: function multiplyScalar(scalar) {
       var v = new Vector(scalar, scalar);
       return this.multiply(v);
@@ -328,18 +339,17 @@ var Vector = function () {
      */
 
   }, {
-    key: 'multiplyScalarNew',
+    key: "multiplyScalarNew",
     value: function multiplyScalarNew(scalar) {
       var v = this.clone();
       return v.multiplyScalar(scalar);
     }
-
     /**
      * Alias of {@link Vector#multiplyScalar__anchor multiplyScalar}
      */
 
   }, {
-    key: 'scale',
+    key: "scale",
     value: function scale(scalar) {
       return this.multiplyScalar(scalar);
     }
@@ -348,11 +358,10 @@ var Vector = function () {
      */
 
   }, {
-    key: 'scaleNew',
+    key: "scaleNew",
     value: function scaleNew(scalar) {
       return this.multiplyScalarNew(scalar);
     }
-
     /**
      * Rotates a vecor by a given amount, provided in radians.
      *
@@ -363,14 +372,12 @@ var Vector = function () {
      */
 
   }, {
-    key: 'rotate',
+    key: "rotate",
     value: function rotate(radian) {
       var x = this.x * Math.cos(radian) - this.y * Math.sin(radian);
       var y = this.x * Math.sin(radian) + this.y * Math.cos(radian);
-
       this.x = x;
       this.y = y;
-
       return this;
     }
     /**
@@ -383,12 +390,11 @@ var Vector = function () {
      */
 
   }, {
-    key: 'rotateNew',
+    key: "rotateNew",
     value: function rotateNew(radian) {
       var v = this.clone();
       return v.rotate(radian);
     }
-
     /**
      * Rotates a vecor by a given amount, provided in degrees. Converts the degree
      * value to radians and runs the rotaet method.
@@ -400,7 +406,7 @@ var Vector = function () {
      */
 
   }, {
-    key: 'rotateDeg',
+    key: "rotateDeg",
     value: function rotateDeg(degrees) {
       return this.rotate(degreesToRadian(degrees));
     }
@@ -414,17 +420,16 @@ var Vector = function () {
      */
 
   }, {
-    key: 'rotateDegNew',
+    key: "rotateDegNew",
     value: function rotateDegNew(degrees) {
       return this.rotateNew(degreesToRadian(degrees));
     }
-
     /**
      * Alias of {@link Vector#rotate__anchor rotate}
      */
 
   }, {
-    key: 'rotateBy',
+    key: "rotateBy",
     value: function rotateBy(radian) {
       return this.rotate(radian);
     }
@@ -433,17 +438,16 @@ var Vector = function () {
      */
 
   }, {
-    key: 'rotateByNew',
+    key: "rotateByNew",
     value: function rotateByNew(radian) {
       return this.rotateNew(radian);
     }
-
     /**
      * Alias of {@link Vector#rotateDeg__anchor rotateDeg}
      */
 
   }, {
-    key: 'rotateDegBy',
+    key: "rotateDegBy",
     value: function rotateDegBy(degrees) {
       return this.rotateDeg(degrees);
     }
@@ -452,11 +456,10 @@ var Vector = function () {
      */
 
   }, {
-    key: 'rotateDegByNew',
+    key: "rotateDegByNew",
     value: function rotateDegByNew(radian) {
       return tjos.rotateDegNew(radian);
     }
-
     /**
      * Rotates a vector to a specific angle
      *
@@ -467,12 +470,12 @@ var Vector = function () {
      */
 
   }, {
-    key: 'rotateTo',
+    key: "rotateTo",
     value: function rotateTo(radian) {
       return this.rotate(radian - this.angle);
     }
   }, {
-    key: 'rotateToNew',
+    key: "rotateToNew",
 
     /**
      * Clones the vector and rotates it to the supplied radian value
@@ -487,8 +490,7 @@ var Vector = function () {
       return v.rotateTo(radian);
     }
   }, {
-    key: 'rotateToDeg',
-
+    key: "rotateToDeg",
 
     /**
      * Rotates a vecor to a given amount, provided in degrees. Converts the degree
@@ -512,11 +514,10 @@ var Vector = function () {
      */
 
   }, {
-    key: 'rotateToDegNew',
+    key: "rotateToDegNew",
     value: function rotateToDegNew(degrees) {
       return this.rotateToNew(degreesToRadian(degrees));
     }
-
     /**
      * Normalises the vector down to a length of 1 unit
      *
@@ -526,7 +527,7 @@ var Vector = function () {
      */
 
   }, {
-    key: 'normalise',
+    key: "normalise",
     value: function normalise() {
       return this.divideScalar(this.length);
     }
@@ -539,11 +540,10 @@ var Vector = function () {
      */
 
   }, {
-    key: 'normaliseNew',
+    key: "normaliseNew",
     value: function normaliseNew() {
       return this.divideScalarNew(this.length);
     }
-
     /**
      * Calculates the distance between this and the supplied vector
      *
@@ -552,11 +552,10 @@ var Vector = function () {
      */
 
   }, {
-    key: 'distance',
+    key: "distance",
     value: function distance(vector) {
       return this.subtractNew(vector).length;
     }
-
     /**
      * Calculates the distance on the X axis between this and the supplied vector
      *
@@ -565,11 +564,10 @@ var Vector = function () {
      */
 
   }, {
-    key: 'distanceX',
+    key: "distanceX",
     value: function distanceX(vector) {
       return this.x - vector.x;
     }
-
     /**
      * Calculated the distance on the Y axis between this and the supplied vector
      *
@@ -578,11 +576,10 @@ var Vector = function () {
      */
 
   }, {
-    key: 'distanceY',
+    key: "distanceY",
     value: function distanceY(vector) {
       return this.y - vector.y;
     }
-
     /**
      * Calculates the dot product between this and a supplied vector
      *
@@ -597,11 +594,10 @@ var Vector = function () {
      */
 
   }, {
-    key: 'dot',
+    key: "dot",
     value: function dot(vector) {
       return this.x * vector.x + this.y * vector.y;
     }
-
     /**
      * Calculates the cross product between this and the supplied vector.
      *
@@ -617,11 +613,10 @@ var Vector = function () {
      */
 
   }, {
-    key: 'cross',
+    key: "cross",
     value: function cross(vector) {
       return this.x * vector.x - this.y * vector.y;
     }
-
     /**
      * Getters and setters
      */
@@ -634,7 +629,7 @@ var Vector = function () {
      */
 
   }, {
-    key: 'x',
+    key: "x",
     set: function set(x) {
       if (typeof x == 'number') {
         this._x = x;
@@ -645,7 +640,6 @@ var Vector = function () {
     get: function get() {
       return this._x || 0;
     }
-
     /**
     * (getter/setter) The y value of the vector.
     *
@@ -654,7 +648,7 @@ var Vector = function () {
     */
 
   }, {
-    key: 'y',
+    key: "y",
     set: function set(y) {
       if (typeof y == 'number') {
         this._y = y;
@@ -665,7 +659,6 @@ var Vector = function () {
     get: function get() {
       return this._y || 0;
     }
-
     /**
     * (getter/setter) The length of the vector presented as a square. If you're using
     * length for comparison, this is quicker.
@@ -675,9 +668,10 @@ var Vector = function () {
     */
 
   }, {
-    key: 'lengthSquared',
+    key: "lengthSquared",
     set: function set(length) {
       var factor;
+
       if (typeof length == 'number') {
         factor = length / this.lengthSquared;
         this.multiplyScalar(factor);
@@ -688,7 +682,6 @@ var Vector = function () {
     get: function get() {
       return this.x * this.x + this.y * this.y;
     }
-
     /**
     * (getter/setter) The length of the vector
     *
@@ -697,9 +690,10 @@ var Vector = function () {
     */
 
   }, {
-    key: 'length',
+    key: "length",
     set: function set(length) {
       var factor;
+
       if (typeof length == 'number') {
         factor = length / this.length;
         this.multiplyScalar(factor);
@@ -710,7 +704,6 @@ var Vector = function () {
     get: function get() {
       return Math.sqrt(this.lengthSquared);
     }
-
     /**
     * (getter/setter) The angle of the vector, in radians
     *
@@ -719,7 +712,7 @@ var Vector = function () {
     */
 
   }, {
-    key: 'angle',
+    key: "angle",
     set: function set(radian) {
       if (typeof radian == 'number') {
         this.rotateTo(radian);
@@ -730,7 +723,6 @@ var Vector = function () {
     get: function get() {
       return Math.atan2(this.y, this.x);
     }
-
     /**
     * (getter/setter) The angle of the vector, in radians
     *
@@ -739,7 +731,7 @@ var Vector = function () {
     */
 
   }, {
-    key: 'angleInDegrees',
+    key: "angleInDegrees",
     set: function set(degrees) {
       if (typeof degrees == 'number') {
         this.rotateToDeg(degrees);
@@ -750,7 +742,6 @@ var Vector = function () {
     get: function get() {
       return radianToDegrees(Math.atan2(this.y, this.x));
     }
-
     /**
      * (getter/setter) Vector width.
       * Alias of {@link Vector#x x}
@@ -759,14 +750,13 @@ var Vector = function () {
      */
 
   }, {
-    key: 'width',
+    key: "width",
     set: function set(w) {
       this.x = w;
     },
     get: function get() {
       return this.x;
     }
-
     /**
      * (getter/setter) Vector height.
       * Alias of {@link Vector#x x}
@@ -775,14 +765,13 @@ var Vector = function () {
      */
 
   }, {
-    key: 'height',
+    key: "height",
     set: function set(h) {
       this.y = h;
     },
     get: function get() {
       return this.y;
     }
-
     /**
      * (getter/setter) Vector area.
      * @readonly
@@ -791,11 +780,10 @@ var Vector = function () {
      */
 
   }, {
-    key: 'area',
+    key: "area",
     get: function get() {
       return this.x * this.y;
     }
-
     /**
      * (getter/setter) Vector slope.
      *
@@ -803,7 +791,7 @@ var Vector = function () {
      */
 
   }, {
-    key: 'slope',
+    key: "slope",
     set: function set(value) {
       if (!isNaN(value)) {
         var angle = Math.atan(value);
@@ -818,4 +806,5 @@ var Vector = function () {
   return Vector;
 }();
 
-exports.default = Vector;
+var _default = Vector;
+exports["default"] = _default;
